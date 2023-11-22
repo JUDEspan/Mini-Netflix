@@ -16,6 +16,7 @@
     <input type="text" id="todo" class="form-control w-50 mt-5" >
     <input type="text" id="todoDesc" class="form-control w-50 mt-4 mb-4" >
     <button class="btn btn-info w-50" onclick="addTodo()">check</button>
+    <div id="show"></div>
 </center>
 
 
@@ -23,7 +24,7 @@
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
-        import { getDatabase,ref ,set } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
+        import { getDatabase,ref ,set, onValue } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
         
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
@@ -41,8 +42,9 @@
     };
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-        const auth = getAuth();
+        const auth = getAuth(app);
         const database = getDatabase(app);
+        let todoIndex = 0
         
         onAuthStateChanged(auth, (user)=>{
             if (user) {
@@ -103,7 +105,18 @@
 
         let dbRef = ref(database, "allTodos")
         onValue(dbRef,(snapshot)=>{
-            const data = snapshot.value()
+            const data = snapshot.val()
+            console.log(data.length);
+            if(data){
+                todoIndex = data.length
+            }else{
+                todoIndex = 0
+            }
+
+            data.map((eachItem)=>{
+                console.log(eachItem);
+            })
+
             console.log(data);
         })
     </script>

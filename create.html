@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+    <center>
+    <h1>Sign Up</h1>
+    <p id="err"></p>
+    <input type="email" id="youremail"  class="form-control ms-3 mt-5 w-25" placeholder="Enter your email"> 
+    <input type="password" id="yourpasskey"  class="form-control ms-3 mt-5 w-25" placeholder="Password">
+    <button id="click">click</button>
+    </center>
+
+
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+    import  {getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-auth.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+    apiKey: "AIzaSyCAWeEeu7CdYXVbibjHwjXOgzUXLVM0Nrg",
+    authDomain: "mini-netflix-674bf.firebaseapp.com",
+    projectId: "mini-netflix-674bf",
+    storageBucket: "mini-netflix-674bf.appspot.com",
+    messagingSenderId: "1035726937816",
+    appId: "1:1035726937816:web:7daa2f4fc8b6a3544fc1ad",
+    measurementId: "G-5YYPXJ58CH"
+    };
+
+
+  // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    if (youremail != "" && yourpasskey != "" ) {
+    document.getElementById("click").addEventListener('click', ()=>{
+        const email = document.getElementById("youremail").value;
+        const password = document.getElementById("yourpasskey").value;
+        createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+    // Signed up 
+    const user = userCredential.user;
+    console.log(user);
+    if(user){
+        window.location.href = 'index.html'
+    }
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+  });
+})
+    }else{
+        err.innerHTML = ` <p class="text danger">Please fill all</p>`
+    }
+
+
+    </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

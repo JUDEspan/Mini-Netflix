@@ -88,13 +88,24 @@
                 }
                 console.log(todoObj);
                 let dbRef = ref(database, "allTodos")
-                set(dbRef, todoObj)
+                let done= set(dbRef, todoObj)
+                if(done){
+                    alert("saved")
+                }else{
+                    alert("Error")
+                }
             }else{
                 alert("omo no dey fall my hand")
             }
         })
         }
         window.addTodo=addTodo
+
+        let dbRef = ref(database, "allTodos")
+        onValue(dbRef,(snapshot)=>{
+            const data = snapshot.value()
+            console.log(data);
+        })
     </script>
 </body>
 </html>
